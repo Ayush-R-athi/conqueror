@@ -22,11 +22,11 @@
 
 ### Live Application  
 - **Production URL**: [https://supermind-728e46.webflow.io/](https://supermind-728e46.webflow.io/)  
-- **Platform**: Render  
+- **Platform**: Workflow
 - **Status**: Active  
 
 ### Deployment Infrastructure  
-- **Frontend**: Render Web Services  
+- **Frontend**: Workflow Web Services  
 - **Database**: DataStax Astra DB  
 - **AI Integration**: Langflow & Gemini  
 
