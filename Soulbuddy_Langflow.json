@@ -1,0 +1,115 @@
+
+{
+  "type": "flow",
+  "version": "0.0.1",
+  "nodes": [
+    {
+      "id": "input_birth_details",
+      "type": "Input",
+      "name": "Birth Details Input",
+      "parameters": {
+        "fields": [
+          {"name": "Name", "type": "string"},
+          {"name": "Date of Birth", "type": "date"},
+          {"name": "Time", "type": "string"},
+          {"name": "Gender", "type": "string"},
+          {"name": "State", "type": "string"},
+          {"name": "City", "type": "string"}
+        ]
+      },
+      "position": [100, 100]
+    },
+    {
+      "id": "validate_input",
+      "type": "Logic",
+      "name": "Validate Input",
+      "parameters": {
+        "rules": [
+          {"field": "Date of Birth", "rule": "is_date"},
+          {"field": "Time", "rule": "not_empty"},
+          {"field": "Name", "rule": "not_empty"}
+        ]
+      },
+      "position": [300, 100]
+    },
+    {
+      "id": "kundali_generation",
+      "type": "APIRequest",
+      "name": "Kundali Generation",
+      "parameters": {
+        "url": "https://astroapi.com/kundali",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "{Name}",
+          "dob": "{Date of Birth}",
+          "time": "{Time}",
+          "gender": "{Gender}",
+          "state": "{State}",
+          "city": "{City}"
+        }
+      },
+      "position": [500, 100]
+    },
+    {
+      "id": "numerology_calculation",
+      "type": "PythonFunction",
+      "name": "Numerology Calculation",
+      "parameters": {
+        "code": "def calculate_numerology(dob, name):\n    # Calculate Life Path Number\n    dob_digits = [int(d) for d in dob if d.isdigit()]\n    life_path = sum(dob_digits)\n    while life_path > 9: \n        life_path = sum(map(int, str(life_path)))\n\n    # Calculate Expression Number\n    letter_values = {\"A\": 1, \"B\": 2, \"C\": 3, \"D\": 4, \"E\": 5, \"F\": 6, \"G\": 7, \"H\": 8, \"I\": 9, \"J\": 1, \"K\": 2, \"L\": 3, \"M\": 4, \"N\": 5, \"O\": 6, \"P\": 7, \"Q\": 8, \"R\": 9, \"S\": 1, \"T\": 2, \"U\": 3, \"V\": 4, \"W\": 5, \"X\": 6, \"Y\": 7, \"Z\": 8}\n    name = name.upper().replace(\" \", \"\")\n    expression = sum(letter_values[char] for char in name if char in letter_values)\n    while expression > 9:\n        expression = sum(map(int, str(expression)))\n\n    return {\"Life Path Number\": life_path, \"Expression Number\": expression}\n\noutput = calculate_numerology(input[\"Date of Birth\"], input[\"Name\"])",
+        "input": {
+          "Date of Birth": "{Date of Birth}",
+          "Name": "{Name}"
+        }
+      },
+      "position": [700, 100]
+    },
+    {
+      "id": "recommendations",
+      "type": "PythonFunction",
+      "name": "Generate Recommendations",
+      "parameters": {
+        "code": "def generate_recommendations(kundali, numerology):\n    gemstone = \"Ruby\" if kundali['sun_sign'] == \"Leo\" else \"Emerald\"\n    pooja = \"Chant Gayatri Mantra\" if numerology['Life Path Number'] == 3 else \"Perform Hanuman Chalisa\"\n    meditation = \"Morning Yoga\" if kundali['moon_sign'] == \"Cancer\" else \"Evening Meditation\"\n    return {\"Gemstone Suggestion\": gemstone, \"Pooja Suggestion\": pooja, \"Meditation Suggestion\": meditation}\n\noutput = generate_recommendations(input['kundali'], input['numerology'])",
+        "input": {
+          "kundali": "{kundali}",
+          "numerology": "{numerology}"
+        }
+      },
+      "position": [900, 100]
+    },
+    {
+      "id": "chatbot",
+      "type": "Chatbot",
+      "name": "Spiritual Advice Chatbot",
+      "parameters": {
+        "prompt": "You are a spiritual guide chatbot. Use the following user details and recommendations to provide insightful responses:\n{input}",
+        "model": "gpt-4"
+      },
+      "position": [1100, 100]
+    },
+    {
+      "id": "output",
+      "type": "Output",
+      "name": "Final Output",
+      "parameters": {
+        "fields": [
+          "kundali",
+          "numerology",
+          "recommendations",
+          "chatbot_responses"
+        ]
+      },
+      "position": [1300, 100]
+    }
+  ],
+  "connections": [
+    {"from": "input_birth_details", "to": "validate_input"},
+    {"from": "validate_input", "to": "kundali_generation"},
+    {"from": "kundali_generation", "to": "numerology_calculation"},
+    {"from": "numerology_calculation", "to": "recommendations"},
+    {"from": "recommendations", "to": "chatbot"},
+    {"from": "chatbot", "to": "output"}
+  ]
+}

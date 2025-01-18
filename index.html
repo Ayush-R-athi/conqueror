@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoulBuddy</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #8f94fb, #0f0622);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Header Section */
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-top: 10px;
+    }
+
+    /* Chat Widget Container */
+    langflow-chat {
+      display: block;
+      height: 70%;
+      width: 100%;
+      max-width: 100%;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      overflow: hidden;
+      background-color: #ffffff;
+      color: #333;
+    }
+
+    /* Floating Footer */
+    footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    footer a {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      langflow-chat {
+        height: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 0.9rem;
+      }
+
+      langflow-chat {
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to SoulBuddy</h1>
+    <p>Your personalized conversational partner, always here to help!</p>
+  </header><script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js""></script>
+
+  <langflow-chat
+    window_title="SoulBuddy"
+    flow_id="837db22c-e172-4aee-9cbc-e0cbbab05dd8"
+    host_url="http://localhost:7860"
+
+  ></langflow-chat>
+
+  <footer>
+    Made with ❤️ by <a href="#">Team Conquerors</a>
+  </footer>
+
+  <script>
+    // Responsive Scaling for the Chat Widget
+    const resizeChatWidget = () => {
+      const chatWidget = document.querySelector('langflow-chat');
+      const viewportWidth = window.innerWidth;
+
+      if (viewportWidth < 500) {
+        chatWidget.style.width = `${viewportWidth - 40}px`;
+      } else {
+        chatWidget.style.width = '500px';
+      }
+    };
+
+    // Initialize and Listen to Resizing
+    window.addEventListener('resize', resizeChatWidget);
+    resizeChatWidget(); // Run initially
+  </script>
+</body>
+</html>
