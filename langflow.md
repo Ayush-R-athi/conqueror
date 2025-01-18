@@ -1,6 +1,6 @@
 # LangFlow Pipeline Documentation
 
-![LangFlow Diagram](assets/images/langflow.png)
+![LangFlow Diagram](assets/images/langflow.jpg)
 
 
 This document explains each component in the LangFlow pipeline to demonstrate how data flows through the system to generate a meaningful chat output based on user input. The components and their connections are outlined below:
