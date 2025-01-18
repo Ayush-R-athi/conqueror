@@ -1,4 +1,4 @@
-# Insightly  
+# Soul Buddy  
 ## AI-Powered Astrology and Numerology Platform  
 
 ### Complete Technical Documentation  
